@@ -1,9 +1,8 @@
-//http:  package this like controller for mvc patteren
+//package http:  package this like controller for mvc patteren
 package http
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/Hossam-Eldin/go_Oauth-api/src/domain/accesstoken"
 	"github.com/gin-gonic/gin"

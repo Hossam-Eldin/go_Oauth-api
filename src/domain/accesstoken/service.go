@@ -1,6 +1,10 @@
 package accesstoken
 
-import "github.com/Hossam-Eldin/go_Oauth-api/src/utils/errors"
+import (
+	"strings"
+
+	"github.com/Hossam-Eldin/go_Oauth-api/src/utils/errors"
+)
 
 //Repository : method
 type Repository interface {
@@ -27,13 +31,13 @@ func NewService(repo Repository) Service {
 // logic point bettewn the repostiory and controller http
 func (s *service) GetByID(accesstTokenID string) (*AccessToken, *errors.RestErr) {
 	accesstTokenID = strings.TrimSpace(accesstTokenID)
-	if len(accesstTokenID) == 0{
-		return nil ,errors.NewBadRequestError("invalid data request need access token")
+	if len(accesstTokenID) == 0 {
+		return nil, errors.NewBadRequestError("invalid data request need access token")
 	}
-	
-	accesstoken , err := s.repository.GetByID(accesstTokenID)
+
+	accesstoken, err := s.repository.GetByID(accesstTokenID)
 	if err != nil {
 		return nil, err
 	}
-	return accesstoken,nil
+	return accesstoken, nil
 }
