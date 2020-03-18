@@ -1,6 +1,11 @@
 package accesstoken
 
-import "time"
+import (
+	"strings"
+	"time"
+
+	"github.com/Hossam-Eldin/go_Oauth-api/src/utils/errors"
+)
 
 const (
 	expirationTime = 24
@@ -8,10 +13,28 @@ const (
 
 //AccessToken : type struct
 type AccessToken struct {
-	AccessToken string `json:"accest_token"`
+	AccessToken string `json:"access_token"`
 	UserID      int64  `json:"user_id"`
 	ClientID    int64  `json:"client_id"`
 	Expires     int64  `json:"expires"`
+}
+
+//Validate : for trim
+func (at *AccessToken) Validate() *errors.RestErr {
+	at.AccessToken = strings.TrimSpace(at.AccessToken)
+	if at.AccessToken == "" {
+		return errors.NewBadRequestError("invalid data request need access token")
+	}
+	if at.UserID <= 0 {
+		return errors.NewBadRequestError("invalid user id")
+	}
+	if at.ClientID <= 0 {
+		return errors.NewBadRequestError("invalid client id")
+	}
+	if at.Expires <= 0 {
+		return errors.NewBadRequestError("invalid Expires")
+	}
+	return nil
 }
 
 //GetNewAccessToken : this will return the accesstoken
